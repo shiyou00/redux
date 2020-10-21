@@ -1,11 +1,20 @@
-import React from 'react';
+import { connect } from 'react-redux'
+import News from "./News";
+import {actionCreator} from "./index";
 
-function App() {
-  return (
-    <div className="App">
-      App
-    </div>
-  );
+function mapStateToProps(state) {
+  return state
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchNews:()=>{
+      dispatch(actionCreator.fetchNews());
+    }
+  }
+}
+
+export const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(News)
