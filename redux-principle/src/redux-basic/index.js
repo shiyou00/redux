@@ -1,7 +1,4 @@
-export const createStore = (reducer,applyMiddleware)=>{
-  if(applyMiddleware){
-    return applyMiddleware(createStore)(reducer);
-  }
+export const createStore = (reducer)=>{
   let currentState = {};
   let observers = [];
   function getState() {
@@ -20,7 +17,10 @@ export const createStore = (reducer,applyMiddleware)=>{
   }
 }
 
-// const store = createStore(reducer);
-// store.subscribe(() => { console.log('组件1收到store的通知') })
-// store.subscribe(() => { console.log('组件2收到store的通知') })
-// store.dispatch({type: 'plus'});
+export const applyMiddleware = (store, middlewares) =>{
+  middlewares = [ ...middlewares ]
+  middlewares.reverse()
+  middlewares.forEach(middleware =>
+    store.dispatch = middleware(store)
+  )
+}

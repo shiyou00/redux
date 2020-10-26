@@ -1,42 +1,23 @@
-import React from 'react';
-import { connect } from "./store/connect";
-import { Parent } from "./lifecycle/Parent"
+import { connect } from './react-redux'
+import News from "./News";
+import {actionCreator, actionTypes} from "./action";
 
-const addCountAction = {
-  type: 'plus'
+function mapStateToProps(state) {
+  return state
 }
 
-const mapStateToProps = state => {
+function mapDispatchToProps(dispatch) {
   return {
-    count: state.count
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addCount: () => {
-      // console.log(dispatch,addCountAction);
-      dispatch(addCountAction)
+    fetchNews:()=>{
+      dispatch(actionCreator.fetchNews());
+    },
+    fetchStart:()=>{
+      dispatch({type:actionTypes.FETCH_START})
     }
   }
 }
 
-class App extends React.Component {
-  render() {
-    const vd = (
-      <div id="a">
-        <p>abc</p>
-      </div>
-    );
-    console.log(vd);
-    return (
-      <div className="App">
-        {/*{ this.props.count }*/}
-        {/*<button onClick={ () => this.props.addCount() }>增加</button>*/}
-        <Parent />
-      </div>
-    );
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(News)
